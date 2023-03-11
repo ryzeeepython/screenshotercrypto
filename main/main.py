@@ -2,10 +2,12 @@
 from PIL import Image, ImageDraw, ImageFont
 import os
 import asyncio
+import config
+
 class DrawScreen:
 
     def __init__(self):
-        self.leverage_font  = ImageFont.truetype("./fonts/Demo_Fonts/Fontspring-DEMO-neuevektor-a-book.otf",30)
+        self.leverage_font  = ImageFont.truetype("main/fonts/Fontspring-DEMO-neuevektor-a-book.ttf",30)
         self.coin_font = ImageFont.truetype("main/fonts/DMCAPS.TTF",30)
         self.res_font = ImageFont.truetype("main/fonts/DMCAPS.TTF",95)
         self.prices = ImageFont.truetype("main/fonts/DMCAPS.TTF",35)
@@ -20,6 +22,13 @@ class DrawScreen:
     def is_int(self,str):
         try:
             int(str)
+            return True
+        except ValueError:
+            return False
+        
+    def is_number(self,str):
+        try:
+            float(str)
             return True
         except ValueError:
             return False
@@ -63,6 +72,9 @@ class DrawScreen:
             drawer.text((145, 185), "Купить", font=self.sell_buy_font, fill= self.green_color)
 
         #draw leverage
+        if len(str(str_leverage)) == 2:
+            drawer.text((338, 182), str_leverage, font=self.leverage_font, fill='white')
+
         if len(str(str_leverage)) == 3:
             drawer.text((338, 182), str_leverage, font=self.leverage_font, fill='white')
 

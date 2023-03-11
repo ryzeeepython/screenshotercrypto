@@ -9,4 +9,4 @@ from aiogram import types
 @dp.message_handler(Text(equals='🚨 Инфо'))
 @dp.message_handler(Command('info'))
 async def on_start_test(message: types.Message):  
-    await message.answer('Other Projects: GitHub: https://github.com/ryzeeepython \n По всем вопросам  - @s_ryzeee')
+    await message.answer('По всем вопросам  - @artemtebyakin')

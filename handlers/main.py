@@ -8,18 +8,25 @@ from aiogram import types
 from aiogram.types.input_file import InputFile
 from aiogram.dispatcher.filters import Text
 from main.main import DrawScreen
-from keyboard.inline.keyboard  import Keyboard
+from main.users import Users
 
 DrawScreen = DrawScreen()
+Users = Users()
 
-Keyboard = Keyboard()
-markup = Keyboard.startmenu()
+list_button_name = ['Сделать скрин', '🚨 Инфо']
+keyboard = types.ReplyKeyboardMarkup(resize_keyboard= True)
+keyboard.add(*list_button_name)
+markup = keyboard
+
 
 @dp.message_handler(Text(equals='Сделать скрин'))
 @dp.message_handler(Command('make_screen'))
 async def main(message: types.Message):
-    await message.answer('Введите название пары, например "BTCUSDT": ', reply_markup=types.ReplyKeyboardRemove())
-    await make_screen_states.Q1.set()
+    if Users.check_is_paid(message.from_user.id) == True: 
+        await message.answer('Введите название пары, например "BTCUSDT": ', reply_markup=types.ReplyKeyboardRemove())
+        await make_screen_states.Q1.set()
+    else:
+        await message.answer('У вас нет доступа, обратитесь к @artemtebyakin')
 
 
 @dp.message_handler(state=make_screen_states.Q1)
@@ -65,7 +72,7 @@ async def main(message: types.Message, state: FSMContext):
 @dp.message_handler(state=make_screen_states.Q4)
 async def main(message: types.Message, state: FSMContext):
     answer = message.text.lstrip().lower()
-    if not(answer.isdigit()):
+    if not(DrawScreen.is_number(answer)):
         await state.finish()
         await message.answer(f'Ошибка, цена должна состоять только из цифр')
         await message.answer(f'Повторить попытку: /make_screen', reply_markup=markup)
@@ -78,7 +85,7 @@ async def main(message: types.Message, state: FSMContext):
 @dp.message_handler(state=make_screen_states.Q5)
 async def main(message: types.Message, state: FSMContext):
     answer = message.text.lstrip().lower()
-    if not(answer.isdigit()):
+    if not(DrawScreen.is_number(answer)):
         await state.finish()
         await message.answer(f'Ошибка, цена должна состоять только из цифр')
         await message.answer(f'Повторить попытку: /make_screen', reply_markup=markup)
@@ -89,5 +96,5 @@ async def main(message: types.Message, state: FSMContext):
         await message.answer(f'Подождите, чуток')
         DrawScreen.drawscreen(data, message.chat.id)
         photo = InputFile(f"main/images/{message.chat.id}_img.jpg")
-        await bot.send_photo(message.chat.id, photo)
+        await bot.send_photo(message.chat.id, photo, reply_markup=markup)
         DrawScreen.delete_screen(chat_id=message.chat.id)

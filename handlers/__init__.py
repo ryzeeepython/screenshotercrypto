@@ -1,1 +1,1 @@
-from . import start, info, main
+from . import start, info, main, add_members

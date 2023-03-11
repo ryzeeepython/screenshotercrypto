@@ -11,5 +11,5 @@ async def on_start_test(message: types.Message):
     list_button_name = ['Сделать скрин', '🚨 Инфо']
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard= True)
     keyboard.add(*list_button_name)
-    await message.answer('Привет, ' + str(message.from_user.full_name) + '\nЭто бот для генерации скриншотов с профитами с биржи Binance \nПросто напиши /make_screen', reply_markup=keyboard)
+    await message.answer('Привет, ' + str(message.from_user.full_name) + '❤️\nЭто бот для генерации скриншотов с профитами с биржи Binance 📈 \n❗️ Просто напиши /make_screen', reply_markup=keyboard)
     
