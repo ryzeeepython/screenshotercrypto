@@ -1,0 +1,2 @@
+fix bug with sending the same img 
+(probably, give diff names to imges or don't save them and try to return to the another func)
