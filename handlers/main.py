@@ -22,12 +22,12 @@ markup = keyboard
 @dp.message_handler(Text(equals='Сделать скрин'))
 @dp.message_handler(Command('make_screen'))
 async def main(message: types.Message):
-    if Users.check_is_paid(message.from_user.id) == True: 
+    if Users.check_is_paid(message.from_user.id, message.from_user.full_name) == True: 
         await message.answer('Введите название пары, например "BTCUSDT": ', reply_markup=types.ReplyKeyboardRemove())
         await make_screen_states.Q1.set()
     else:
-        await message.answer('У вас нет доступа, обратитесь к @artemtebyakin')
-
+        await message.answer('У вас нет доступа, обратитесь к @s_ryzeee')
+    
 
 @dp.message_handler(state=make_screen_states.Q1)
 async def main(message: types.Message, state: FSMContext):

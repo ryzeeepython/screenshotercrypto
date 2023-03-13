@@ -24,6 +24,7 @@ async def main(message: types.Message, state: FSMContext):
         await state.finish()
         await message.answer('Все, добавил')
         users.add_member(str(answer))
+        await message.answer(f'Пользователи бота:\n{users.get_members}')
     else:
         await state.finish()
 
